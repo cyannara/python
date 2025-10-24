@@ -205,6 +205,13 @@ Stop-Process -Name python -Force
 
 #### DB 연결
 
+wallet 안의 tnsnames.ora 파일의 DIRECTORY 수정했음
+
+```
+WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY="D:/pythonwork/fastapi-oracle-api/Wallet_shop")))
+SSL_SERVER_DN_MATCH=yes
+```
+
 ```python
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import declarative_base, sessionmaker
