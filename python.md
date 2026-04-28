@@ -1,3 +1,41 @@
+## python  설치
+
+## [vscode에 파이썬 설치](https://code.visualstudio.com/docs/python/python-tutorial)
+
+1. Python 3
+2. VS Code
+3. VS Code Python extension (For additional details on installing extensions, see Extension Marketplace)
+
+
+
+## [uv](https://docs.astral.sh)
+- Python 생태계에서 등장한 빠른 패키지/가상환경 관리 도구로서 Rust로 구현됨
+- 기존의 pip, pip-tools, pipx, poetry, pyenv, virtualenv 등을 하나로 통합하여 대체할 수 있는 강력한 도구
+
+[설치가이드](https://docs.astral.sh/uv/getting-started/installation/)  
+
+
+```bash
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+[project 시작하기](https://docs.astral.sh/uv/guides/projects/)
+
+```bash
+uv init hello-world
+cd hello-world
+uv run main.py
+```
+
+의존성관리  
+```bash
+uv add requests
+```
+##
+
+
+## 실기 대비
+
 정보처리기사 실기 Python은 주로 코드의 출력 결과를 묻는 단답형/예상 문제(2~3문제, 약 10~15점)로 출제됩니다. 백준의 브론즈~실버 수준인 데이터 입출력(print, input), 배열(list), 딕셔너리, 슬라이싱, 기본 반복문/조건문, 간단한 알고리즘(합계, 최대값) 위주로 연습하며 대소문자, 공백 등 정답 형식을 철저히 맞춰야 합니다. 
 Naver Blog
 Naver Blog

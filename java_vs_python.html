@@ -1,0 +1,744 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>python</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="34a891c4-df9c-80f0-9438-c8fc48e7bc1a" class="page sans"><header><h1 class="page-title" dir="auto">python</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h3 id="34a891c4-df9c-80fc-a4ce-fe2610da55c5" class="">기본문법 비교</h3></div><div style="display:contents" dir="ltr"><table id="34a891c4-df9c-80a2-bbcb-ff2a0b9601e7" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-8073-8700-cf07357c1999"><th id="WZ{e" class="simple-table-header-color simple-table-header" style="width:138.63750457763672px">구분</th><th id="VIp`" class="simple-table-header-color simple-table-header" style="width:362px">자바</th><th id="yNp@" class="simple-table-header-color simple-table-header" style="width:416px">파이썬</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-806b-b580-c8c17ebf1af1"><td id="WZ{e" class="" style="width:138.63750457763672px">문법구조</td><td id="VIp`" class="" style="width:362px"> { } 로 코드 블록 구분<br/>문장은 세미콜론으로 끝나야 함.<br/>컴파일 언어<br/>클래스 메소드 구조가 필수</td><td id="yNp@" class="" style="width:416px">들여쓰기로 코드 블록 구분<br/>세미콜론이 필요 없음<br/>인터프리터 언어<br/>클래스 가 없어도 동작</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-8020-999a-f3e55208432f"><td id="WZ{e" class="" style="width:138.63750457763672px">활용분야</td><td id="VIp`" class="" style="width:362px">  • 대규모 기업용 서버 애플이케이션<br/>  • 안드로이드 앱<br/>  • 백엔드</td><td id="yNp@" class="" style="width:416px">  • 데이터분석<br/>  • 인공지능(AI)<br/>  • IoT</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-8078-875e-e62a37731a91"><td id="WZ{e" class="" style="width:138.63750457763672px">시작</td><td id="VIp`" class="" style="width:362px">public class Main {<br/>    public static void main(String[] args) {<br/>        System.out.println(&quot;Hello, World!&quot;);<br/>    }<br/>}</td><td id="yNp@" class="" style="width:416px">print(&quot;Hello, World!&quot;)</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-808a-ba08-feaa88a779dc"><td id="WZ{e" class="" style="width:138.63750457763672px">변수 선언</td><td id="VIp`" class="" style="width:362px">int num = 123;<br/>double num2 = 123.4;<br/>String str = &quot;hello&quot;;<br/>boolean isTrue = false;</td><td id="yNp@" class="" style="width:416px">num = 123<br/>num2 = 123.4<br/>str = &quot;hello&quot;<br/>isTrue = False</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-80e2-8cbd-ed74688e2c95"><td id="WZ{e" class="" style="width:138.63750457763672px">블록</td><td id="VIp`" class="" style="width:362px">if(true) {<br/>    System.out.println(&quot;aa&quot;);<br/>    if(true) {<br/>        System.out.println(&quot;bb&quot;);<br/>    }<br/>}</td><td id="yNp@" class="" style="width:416px">if True :<br/>    print(&quot;aa&quot;);<br/>    if True :<br/>        print(&quot;bb&quot;);</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-802f-a1e0-d2b0fc97754f"><td id="WZ{e" class="" style="width:138.63750457763672px">주석</td><td id="VIp`" class="" style="width:362px">// 한 줄 주석<br/>/*  <br/>여러 줄 주석<br/> */</td><td id="yNp@" class="" style="width:416px"># 한 줄 주석<br/>’’’<br/>여러 줄 주석<br/>’’’</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-80f3-a275-fbb29a82901b"><td id="WZ{e" class="" style="width:138.63750457763672px">연산자</td><td id="VIp`" class="" style="width:362px">int num1 = 5 / 3 ;               ← 1 (몫)<br/>int num2 = 5 % 3 ;             ← 2 (나머지)<br/>double num3 = 5.0 / 3 ;    ← 1.666(나누기)</td><td id="yNp@" class="" style="width:416px">num1 = 5 // 3                              ← 몫<br/>num2 = 5 % 3                              ← 나머지<br/>num3 = 5 / 3                                ← 나누기<br/>num1, num2 = divmod(5, 3)      ← 몫과 나머지</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-8056-a91a-c4a5a4324a0a"><td id="WZ{e" class="" style="width:138.63750457763672px">input</td><td id="VIp`" class="" style="width:362px">Scanner input = new Scanner(System.in);<br/><br/>System.out.println(&quot;숫자 2개 입력&quot;);<br/>String[] str =  input.nextLine().split(&quot; &quot;);<br/>System.out.println(str[0]);<br/><br/>System.out.println(&quot;숫자를 입력하세요.&quot;);<br/>int number = input.nextInt();<br/>System.out.println(number);</td><td id="yNp@" class="" style="width:416px"><br/>number = int (input(&quot;숫자를 입력하세요. : &quot;))</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-805f-968b-de08fa0f0f0f"><td id="WZ{e" class="" style="width:138.63750457763672px">if</td><td id="VIp`" class="" style="width:362px">if ( a &gt; b )  {<br/>    System.out.println(&quot;a가 크다&quot;);<br/>} else if ( a &lt; b ) {<br/>    System.out.println(&quot;a가 작다&quot;);<br/>} else {<br/>    System.out.println(&quot;같다&quot;);<br/>}</td><td id="yNp@" class="" style="width:416px">if  a &gt; b :<br/>    print(&quot;a가 크다&quot;)<br/>elif  a&lt; b :<br/>    print(”a가 작다”)<br/>else :<br/>    print(”같”)</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-806f-80fd-dac1f81323d9"><td id="WZ{e" class="" style="width:138.63750457763672px">for</td><td id="VIp`" class="" style="width:362px">for (int i = 0; i &lt; 5; i++) { <br/>     System.out.println(i);<br/>}</td><td id="yNp@" class="" style="width:416px">for i in range(5) :<br/>    print(i)</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-8096-97ea-cefb518a0afe"><td id="WZ{e" class="" style="width:138.63750457763672px">Enhanced for</td><td id="VIp`" class="" style="width:362px">for (타입 변수 : 컬렉션) { <br/>    ... <br/>}</td><td id="yNp@" class="" style="width:416px">for 변수 in 컬렉션 : <br/>    …</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-807b-965c-db4b73e2a0f6"><td id="WZ{e" class="" style="width:138.63750457763672px">while</td><td id="VIp`" class="" style="width:362px">int i =0;<br/>while (i &lt; 10) {<br/>    System.out.printf(&quot;%d번째입니다.\n&quot;,i);<br/>    i++;<br/>}</td><td id="yNp@" class="" style="width:416px">i =0<br/>while i &lt;10 :<br/>    print(&quot;{}번째입니다.&quot;.format(i))<br/>    i += 1</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-8061-bb85-d13b8fa913e4"><td id="WZ{e" class="" style="width:138.63750457763672px">메서드(함수)</td><td id="VIp`" class="" style="width:362px">int f(int a, int b){<br/>    return a + b;<br/>}</td><td id="yNp@" class="" style="width:416px">def f(a, b) :<br/>    return a + b</td></tr></div><div style="display:contents" dir="ltr"><tr id="350891c4-df9c-8064-bf4f-eb5a45325d36"><td id="WZ{e" class="" style="width:138.63750457763672px">클래스</td><td id="VIp`" class="" style="width:362px">class Good {<br/>  List&lt;Integer&gt; li = List.of(1,2);<br/>}<br/><br/>public class ClassTest {<br/>    public static void main(String[] args) {<br/>        Good good = new Good();<br/>        System.out.println(good.li.get(0));<br/>    }<br/>}</td><td id="yNp@" class="" style="width:416px">class Good:    # 클래스 선언<br/>li = [1,2]           # 필드<br/><br/>g = Good()     # 인스턴스 생성<br/>print(<a href="http://g.li/">g.li</a>[0])</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><h3 id="34a891c4-df9c-80ac-b4bb-ece8ab57dce3" class="">자료구조 비교</h3></div><div style="display:contents" dir="ltr"><table id="34a891c4-df9c-8073-8c3c-df7627dce89e" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-80be-91b6-c9b3d9941484"><th id="xt|@" class="simple-table-header-color simple-table-header" style="width:137.6500015258789px">구분</th><th id="adnt" class="simple-table-header-color simple-table-header" style="width:366.6499938964844px">자바</th><th id="pCe:" class="simple-table-header-color simple-table-header" style="width:413.6499938964844px">파이썬</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="350891c4-df9c-80fa-be97-e22f1b02403f"><td id="xt|@" class="" style="width:137.6500015258789px">배열</td><td id="adnt" class="" style="width:366.6499938964844px">int[] arrays= {1,3,5,7,9};</td><td id="pCe:" class="" style="width:413.6499938964844px">없음. </td></tr></div><div style="display:contents" dir="ltr"><tr id="34c891c4-df9c-8081-a6fa-c7a7c2818168"><td id="xt|@" class="" style="width:137.6500015258789px">list(목록)<br/>[ ]</td><td id="adnt" class="" style="width:366.6499938964844px">List&lt;Integer&gt; list = new ArrayList&lt;&gt;(List.of(1, 3, 7, 9));<br/>list.add(11);<br/>list.addAll(new ArrayList&lt;&gt;(List.of(11,13)));<br/>list.remove(0);<br/>list.set(0,2);<br/>System.out.print(list.get(0));<br/>System.out.print(list.size());</td><td id="pCe:" class="" style="width:413.6499938964844px">arr = [1, 3, 5, 7, 9]<br/>arr.append(11)<br/>arr.extend([13,15])<br/>del arr[0]<br/>arr[0] = 2<br/>print(arr[0])<br/>print(len(arr))</td></tr></div><div style="display:contents" dir="ltr"><tr id="34c891c4-df9c-808d-a17b-ef72f7d3b235"><td id="xt|@" class="" style="width:137.6500015258789px">set(집합:중복X)<br/>{ }</td><td id="adnt" class="" style="width:366.6499938964844px">Set&lt;String&gt; set = new HashSet&lt;&gt;();<br/>set.add(&quot;apple&quot;);<br/>set.add(&quot;banana&quot;);<br/>set.add(&quot;apple&quot;);<br/>System.out.print(set.size());</td><td id="pCe:" class="" style="width:413.6499938964844px">python_set = {&quot;apple&quot;, &quot;banana&quot;, &quot;apple&quot;}<br/>python_set.add(&quot;banana&quot;)<br/>print(len(python_set)) </td></tr></div><div style="display:contents" dir="ltr"><tr id="34c891c4-df9c-808c-9c6d-c56055511fe0"><td id="xt|@" class="" style="width:137.6500015258789px">map(사전)<br/>{키:값}</td><td id="adnt" class="" style="width:366.6499938964844px">//Map<br/>Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();<br/>map.put(&quot;apple&quot;, 3);<br/>map.put(&quot;banana&quot;, 5); <br/><br/>map.put(&quot;kiwi&quot;, 7);<br/>System.out.print(map.get(&quot;apple&quot;));</td><td id="pCe:" class="" style="width:413.6499938964844px">#dictionary<br/>dict = {&quot;apple&quot;: 3, &quot;banana&quot;: 5}<br/>dict[&quot;kiwi&quot;] = 7<br/>print( dict[&quot;apple&quot;]  )</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-80ff-b3f6-de920b33aef8"><td id="xt|@" class="" style="width:137.6500015258789px">계산,집계</td><td id="adnt" class="" style="width:366.6499938964844px">리스트.stream().maptoInt().sum()<br/>Collections.max(리스트)<br/>리스트.sort()</td><td id="pCe:" class="" style="width:413.6499938964844px">sum( 리스트 )<br/>max( 리스트)<br/>리스트.sort()   .reverse()</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-8063-892f-e702ce8357a8"><td id="xt|@" class="" style="width:137.6500015258789px">인덱싱</td><td id="adnt" class="" style="width:366.6499938964844px">음수 인덱싱 없음<br/>list.get(0)</td><td id="pCe:" class="" style="width:413.6499938964844px">array[-1]<br/>array[0]</td></tr></div><div style="display:contents" dir="ltr"><tr id="34a891c4-df9c-80a3-b814-d2b98ae58ed0"><td id="xt|@" class="" style="width:137.6500015258789px">리스트 슬라이싱</td><td id="adnt" class="" style="width:366.6499938964844px">List&lt;Integer&gt; a = List.of(1, 2, 3, 4, 5);<br/>List&lt;Integer&gt; b = a.subList(2, 4);<br/>System.out.print(b);</td><td id="pCe:" class="" style="width:413.6499938964844px">a = [1, 2, 3, 4, 5]<br/>b = a[2:4]                             <br/>print(b)</td></tr></div><div style="display:contents" dir="ltr"><tr id="350891c4-df9c-80cb-9315-c74e6a3953fe"><td id="xt|@" class="" style="width:137.6500015258789px">문자열 슬라이싱</td><td id="adnt" class="" style="width:366.6499938964844px">String a = “Good”;<br/>System.out.print(a.subString(0,2));</td><td id="pCe:" class="" style="width:413.6499938964844px">a=”good”<br/>print(a[0:2])</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="34a891c4-df9c-80f4-8d91-c2d646ecd307" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

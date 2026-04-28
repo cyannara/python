@@ -1,0 +1,11 @@
+class Good:                                 # 클래스 정의
+    li = ["seoul", "kyeonggi", "inchon", "daejeon", "daegu", "pusan"]  
+                                            # 클래스 변수: 지역 이름 리스트
+
+g = Good()                                  # Good 클래스의 인스턴스 생성
+str01 = ''                                  # 결과를 저장할 문자열 변수
+
+for i in g.li:                              # 리스트의 각 지역 이름 순회
+    str01 = str01 + i[0]                    # 각 문자열의 첫 글자만 이어붙이기
+
+print(str01)                                # 최종 문자열 출
