@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python 기초 학습 인포그래픽</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --py: #3B82F6;
+    --py-light: #EFF6FF;
+    --py-dark: #1E40AF;
+    --java: #F97316;
+    --java-light: #FFF7ED;
+    --java-dark: #C2410C;
+    --bg: #F8FAFC;
+    --card: #FFFFFF;
+    --text: #0F172A;
+    --text-muted: #64748B;
+    --border: #E2E8F0;
+    --green: #10B981;
+    --green-light: #ECFDF5;
+    --purple: #8B5CF6;
+    --purple-light: #F5F3FF;
+    --teal: #0D9488;
+    --teal-light: #F0FDFA;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  code, .code {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── SLIDE WRAPPER ── */
+  .slide-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(248,250,252,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    overflow-x: auto;
+  }
+
+  .nav-btn {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    color: var(--text-muted);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover { border-color: var(--py); color: var(--py); }
+  .nav-btn.active { background: var(--py); border-color: var(--py); color: #fff; }
+
+  /* ── SLIDE ── */
+  .slide {
+    display: none;
+    padding: 32px 24px 48px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .slide.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SHARED COMPONENTS ── */
+  .slide-title {
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .slide-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .badge-py { background: var(--py-light); color: var(--py-dark); }
+  .badge-java { background: var(--java-light); color: var(--java-dark); }
+  .badge-both { background: #F1F5F9; color: #475569; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  /* ── CODE BLOCK ── */
+  .code-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .code-panel {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .code-header-java {
+    background: var(--java-light);
+    color: var(--java-dark);
+    border-bottom: 1px solid #FED7AA;
+  }
+
+  .code-header-py {
+    background: var(--py-light);
+    color: var(--py-dark);
+    border-bottom: 1px solid #BFDBFE;
+  }
+
+  .code-body {
+    background: #1E293B;
+    padding: 14px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: #E2E8F0;
+    min-height: 80px;
+    white-space: pre;
+  }
+
+  .kw  { color: #93C5FD; }
+  .str { color: #86EFAC; }
+  .fn  { color: #FDE68A; }
+  .cm  { color: #94A3B8; font-style: italic; }
+  .num { color: #F9A8D4; }
+  .op  { color: #FDA4AF; }
+
+  /* ── COMPARISON TABLE ── */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .comp-table th, .comp-table td {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .comp-table th {
+    background: #F8FAFC;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .comp-table tr:last-child td { border-bottom: none; }
+  .comp-table td:first-child { font-weight: 600; color: var(--text); width: 90px; }
+  .comp-table td:nth-child(2) { color: var(--java-dark); }
+  .comp-table td:nth-child(3) { color: var(--py-dark); }
+
+  .code-inline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    background: #F1F5F9;
+    color: #1E293B;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* ── DATA STRUCTURES ── */
+  .ds-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .ds-card {
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 1px solid transparent;
+  }
+
+  .ds-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .ds-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .ds-desc {
+    font-size: 12.5px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .ds-example {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    line-height: 1.8;
+  }
+
+  /* ── HERO / COVER ── */
+  .hero {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    border-radius: 20px;
+    padding: 48px 40px;
+    color: white;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: 40px;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(249,115,22,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-label {
+    display: inline-block;
+    background: rgba(59,130,246,0.25);
+    color: #93C5FD;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid rgba(59,130,246,0.4);
+  }
+
+  .hero h1 {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .hero h1 span { color: #60A5FA; }
+
+  .hero p {
+    font-size: 15px;
+    color: #94A3B8;
+    max-width: 480px;
+    margin-bottom: 28px;
+  }
+
+  .hero-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .hero-chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #CBD5E1;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+
+  .index-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .index-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .index-card:hover {
+    border-color: var(--py);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(59,130,246,0.12);
+  }
+
+  .index-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.08em;
+  }
+
+  .index-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .index-desc {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ── OPERATORS ── */
+  .op-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .op-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .op-symbol {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--py);
+    margin-bottom: 4px;
+  }
+
+  .op-name {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .op-example {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--text-muted);
+    background: #F8FAFC;
+    padding: 4px 6px;
+    border-radius: 5px;
+  }
+
+  /* ── CONTROL FLOW ── */
+  .flow-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .flow-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .flow-title-bar {
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+    background: #F8FAFC;
+  }
+
+  .flow-title-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  /* ── SETS ── */
+  .set-ops {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .set-op-card {
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+
+  .set-symbol {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .set-label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .set-desc {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  /* ── PROGRESS NAV ── */
+  .slide-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(248,250,252,0.95);
+    border-top: 1px solid var(--border);
+    padding: 10px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    z-index: 100;
+  }
+
+  .nav-arrow {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text);
+  }
+
+  .nav-arrow:hover:not(:disabled) {
+    border-color: var(--py);
+    color: var(--py);
+  }
+
+  .nav-arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .nav-arrow.primary {
+    background: var(--py);
+    border-color: var(--py);
+    color: white;
+  }
+
+  .page-indicator {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .body-bottom-space { height: 64px; }
+</style>
+</head>
+<body>
+
+<div class="slide-container">
+
+  <!-- NAV -->
+  <div class="nav">
+    <button class="nav-btn active" onclick="goSlide(0)">🏠 소개</button>
+    <button class="nav-btn" onclick="goSlide(1)">📐 문법 구조</button>
+    <button class="nav-btn" onclick="goSlide(2)">🔢 변수 &amp; 연산자</button>
+    <button class="nav-btn" onclick="goSlide(3)">🔄 제어 흐름</button>
+    <button class="nav-btn" onclick="goSlide(4)">📦 자료구조</button>
+    <button class="nav-btn" onclick="goSlide(5)">⚙️ 함수 &amp; 클래스</button>
+    <button class="nav-btn" onclick="goSlide(6)">🧮 집합 &amp; 컴프리헨션</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 0 · 표지
+  ══════════════════════════════════════════════════ -->
+  <div class="slide active" id="slide-0">
+    <div class="hero">
+      <div class="hero-label">초보자를 위한 비교 가이드</div>
+      <h1>Java → <span>Python</span><br>문법 전환 가이드</h1>
+      <p>자바를 조금 알거나 프로그래밍을 처음 배우는 분들을 위해<br>파이썬 문법을 직관적으로 비교·정리했습니다.</p>
+      <div class="hero-chips">
+        <span class="hero-chip">📊 데이터 분석</span>
+        <span class="hero-chip">🤖 인공지능 (AI)</span>
+        <span class="hero-chip">🌐 IoT</span>
+        <span class="hero-chip">✨ 간결한 문법</span>
+      </div>
+    </div>
+
+    <div class="index-grid">
+      <div class="index-card" onclick="goSlide(1)">
+        <div class="index-num">SLIDE 01</div>
+        <div class="index-label">📐 문법 구조</div>
+        <div class="index-desc">들여쓰기, 주석, Hello World</div>
+      </div>
+      <div class="index-card" onclick="goSlide(2)">
+        <div class="index-num">SLIDE 02</div>
+        <div class="index-label">🔢 변수 &amp; 연산자</div>
+        <div class="index-desc">타입 선언, 나누기 연산자</div>
+      </div>
+      <div class="index-card" onclick="goSlide(3)">
+        <div class="index-num">SLIDE 03</div>
+        <div class="index-label">🔄 제어 흐름</div>
+        <div class="index-desc">if / for / while 비교</div>
+      </div>
+      <div class="index-card" onclick="goSlide(4)">
+        <div class="index-num">SLIDE 04</div>
+        <div class="index-label">📦 자료구조</div>
+        <div class="index-desc">list, set, dict, tuple</div>
+      </div>
+      <div class="index-card" onclick="goSlide(5)">
+        <div class="index-num">SLIDE 05</div>
+        <div class="index-label">⚙️ 함수 &amp; 클래스</div>
+        <div class="index-desc">def, class 간결하게</div>
+      </div>
+      <div class="index-card" onclick="goSlide(6)">
+        <div class="index-num">SLIDE 06</div>
+        <div class="index-label">🧮 집합 &amp; 컴프리헨션</div>
+        <div class="index-desc">슬라이싱, 집합 연산</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 1 · 문법 구조
+  ══════════════════════════════════════════════════ -->
+  <div class="slide" id="slide-1">
+    <div class="slide-title">📐 문법 구조</div>
+    <div class="slide-sub">파이썬의 가장 큰 특징 — <strong>들여쓰기</strong>가 곧 코드 블록입니다</div>
+
+    <!-- 핵심 차이 카드 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;">
+      <div style="background:var(--java-light);border:1.5px solid #FED7AA;border-radius:14px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;color:var(--java-dark);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;">☕ 자바</div>
+        <ul style="font-size:13px;line-height:2;list-style:none;">
+          <li>🔲 <code>{ }</code> 로 블록 구분</li>
+          <li>➡️ 세미콜론 <code>;</code> 필수</li>
+          <li>🔧 컴파일 언어</li>
+          <li>📦 클래스·메소드 구조 필수</li>
+        </ul>
+      </div>
+      <div style="background:var(--py-light);border:1.5px solid #BFDBFE;border-radius:14px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;color:var(--py-dark);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;">🐍 파이썬</div>
+        <ul style="font-size:13px;line-height:2;list-style:none;">
+          <li>📏 들여쓰기로 블록 구분</li>
+          <li>✅ 세미콜론 불필요</li>
+          <li>⚡ 인터프리터 언어</li>
+          <li>🚀 클래스 없이도 동작</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Hello World -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--text-muted);letter-spacing:0.04em;">👋 Hello World 비교</div>
+    <div class="code-grid">
+      <div class="code-panel">
+        <div class="code-header code-header-java">☕ 자바</div>
+        <div class="code-body"><span class="kw">public class</span> Main {
+  <span class="kw">public static void</span> <span class="fn">main</span>(<span class="kw">String</span>[] args) {
+    System.out.<span class="fn">println</span>(<span class="str">"Hello, World!"</span>);
+  }
+}</div>
+      </div>
+      <div class="code-panel">
+        <div class="code-header code-header-py">🐍 파이썬</div>
+        <div class="code-body"><span class="fn">print</span>(<span class="str">"Hello, World!"</span>)</div>
+      </div>
+    </div>
+
+    <!-- 주석 -->
+    <div style="font-size:14px;font-weight:700;margin:20px 0 10px;color:var(--text-muted);letter-spacing:0.04em;">💬 주석 (Comment)</div>
+    <div class="code-grid">
+      <div class="code-panel">
+        <div class="code-header code-header-java">☕ 자바</div>
+        <div class="code-body"><span class="cm">// 한 줄 주석</span>
+
+<span class="cm">/*
+  여러 줄 주석
+*/</span></div>
+      </div>
+      <div class="code-panel">
+        <div class="code-header code-header-py">🐍 파이썬</div>
+        <div class="code-body"><span class="cm"># 한 줄 주석</span>
+
+<span class="cm">'''
+  여러 줄 주석
+'''</span></div>
+      </div>
+    </div>
+
+    <!-- 들여쓰기 강조 팁 -->
+    <div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:12px;padding:14px 18px;margin-top:20px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:24px;">⚠️</span>
+      <div>
+        <div style="font-weight:700;font-size:13px;color:#C2410C;margin-bottom:4px;">파이썬 들여쓰기 주의!</div>
+        <div style="font-size:12.5px;color:#92400E;line-height:1.6;">들여쓰기가 잘못되면 <strong>IndentationError</strong>가 발생합니다. 일반적으로 <code style="background:#FEF3C7;padding:2px 5px;border-radius:4px;">스페이스 4칸</code> 또는 <code style="background:#FEF3C7;padding:2px 5px;border-radius:4px;">탭 1개</code>를 사용하세요. 같은 블록 안에서는 반드시 동일한 들여쓰기를 써야 합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 2 · 변수 & 연산자
+  ══════════════════════════════════════════════════ -->
+  <div class="slide" id="slide-2">
+    <div class="slide-title">🔢 변수 &amp; 연산자</div>
+    <div class="slide-sub">파이썬은 타입을 직접 쓰지 않아도 됩니다</div>
+
+    <!-- 변수 선언 -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--text-muted);">📝 변수 선언</div>
+    <div class="code-grid" style="margin-bottom:24px;">
+      <div class="code-panel">
+        <div class="code-header code-header-java">☕ 자바 — 타입 명시 필수</div>
+        <div class="code-body"><span class="kw">int</span> num = <span class="num">123</span>;
+<span class="kw">double</span> num2 = <span class="num">123.4</span>;
+<span class="kw">String</span> str = <span class="str">"hello"</span>;
+<span class="kw">boolean</span> isTrue = <span class="kw">false</span>;</div>
+      </div>
+      <div class="code-panel">
+        <div class="code-header code-header-py">🐍 파이썬 — 타입 자동 추론</div>
+        <div class="code-body">num = <span class="num">123</span>
+num2 = <span class="num">123.4</span>
+str = <span class="str">"hello"</span>
+isTrue = <span class="kw">False</span>    <span class="cm"># 대문자 F!</span></div>
+      </div>
+    </div>
+
+    <!-- 연산자 카드 -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--text-muted);">➗ 나누기 연산자 비교</div>
+    <div class="op-grid">
+      <div class="op-card">
+        <div class="op-symbol">//</div>
+        <div class="op-name">몫 (정수 나눗셈)</div>
+        <div class="op-example">5 // 3  →  1</div>
+      </div>
+      <div class="op-card">
+        <div class="op-symbol">%</div>
+        <div class="op-name">나머지</div>
+        <div class="op-example">5 % 3  →  2</div>
+      </div>
+      <div class="op-card">
+        <div class="op-symbol">/</div>
+        <div class="op-name">나누기 (실수)</div>
+        <div class="op-example">5 / 3  →  1.666</div>
+      </div>
+      <div class="op-card" style="background:var(--py-light);border-color:#BFDBFE;">
+        <div class="op-symbol" style="font-size:16px;">divmod</div>
+        <div class="op-name">몫 + 나머지 동시에</div>
+        <div class="op-example">divmod(5,3) → (1,2)</div>
+      </div>
+    </div>
+
+    <!-- 비교표 -->
+    <div style="margin-top:20px;" class="card">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th><span class="badge badge-java">☕ 자바</span></th>
+            <th><span class="badge badge-py">🐍 파이썬</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>정수 나누기</td>
+            <td><code class="code-inline">int x = 5 / 3;</code> → 1</td>
+            <td><code class="code-inline">5 // 3</code> → 1</td>
+          </tr>
+          <tr>
+            <td>나머지</td>
+            <td><code class="code-inline">5 % 3</code> → 2</td>
+            <td><code class="code-inline">5 % 3</code> → 2</td>
+          </tr>
+          <tr>
+            <td>실수 나누기</td>
+            <td><code class="code-inline">5.0 / 3</code> → 1.666</td>
+            <td><code class="code-inline">5 / 3</code> → 1.666</td>
+          </tr>
+          <tr>
+            <td>입력 받기</td>
+            <td><code class="code-inline">Scanner.nextInt()</code></td>
+            <td><code class="code-inline">int(input("입력: "))</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="background:var(--green-light);border:1.5px solid #A7F3D0;border-radius:12px;padding:14px 18px;margin-top:16px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:22px;">💡</span>
+      <div style="font-size:12.5px;color:#065F46;line-height:1.6;">
+        <strong>파이썬 핵심 포인트:</strong> <code style="background:#D1FAE5;padding:2px 5px;border-radius:4px;">True / False</code>는 반드시 <strong>대문자</strong>로 시작! 자바의 <code style="background:#D1FAE5;padding:2px 5px;border-radius:4px;">true / false</code>와 다릅니다.
+        파이썬에서 <code style="background:#D1FAE5;padding:2px 5px;border-radius:4px;">/</code> 연산은 항상 실수를 반환합니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 3 · 제어 흐름
+  ══════════════════════════════════════════════════ -->
+  <div class="slide" id="slide-3">
+    <div class="slide-title">🔄 제어 흐름</div>
+    <div class="slide-sub">if / for / while — 파이썬은 훨씬 읽기 쉽습니다</div>
+
+    <div class="flow-cards">
+      <!-- IF -->
+      <div class="flow-card">
+        <div class="flow-title-bar">
+          <div class="flow-title-icon" style="background:var(--purple-light);color:var(--purple);">if</div>
+          조건문 (if / elif / else)
+        </div>
+        <div class="code-grid" style="padding:14px;gap:10px;margin:0;">
+          <div class="code-panel">
+            <div class="code-header code-header-java" style="font-size:11px;">☕ 자바</div>
+            <div class="code-body" style="font-size:11.5px;"><span class="kw">if</span> (a > b) {
+  <span class="fn">println</span>(<span class="str">"a가 크다"</span>);
+} <span class="kw">else if</span> (a < b) {
+  <span class="fn">println</span>(<span class="str">"a가 작다"</span>);
+} <span class="kw">else</span> {
+  <span class="fn">println</span>(<span class="str">"같다"</span>);
+}</div>
+          </div>
+          <div class="code-panel">
+            <div class="code-header code-header-py" style="font-size:11px;">🐍 파이썬</div>
+            <div class="code-body" style="font-size:11.5px;"><span class="kw">if</span> a > b:
+  <span class="fn">print</span>(<span class="str">"a가 크다"</span>)
+<span class="kw">elif</span> a < b:
+  <span class="fn">print</span>(<span class="str">"a가 작다"</span>)
+<span class="kw">else</span>:
+  <span class="fn">print</span>(<span class="str">"같다"</span>)</div>
+          </div>
+        </div>
+        <div style="padding:0 14px 12px;font-size:11.5px;color:#7C3AED;background:var(--purple-light);margin:0 14px 14px;border-radius:8px;padding:8px 12px;">
+          🔑 <code>else if</code> → <code>elif</code> 로 변경!
+        </div>
+      </div>
+
+      <!-- FOR -->
+      <div class="flow-card">
+        <div class="flow-title-bar">
+          <div class="flow-title-icon" style="background:var(--teal-light);color:var(--teal);">for</div>
+          반복문 (for)
+        </div>
+        <div class="code-grid" style="padding:14px;gap:10px;margin:0;">
+          <div class="code-panel">
+            <div class="code-header code-header-java" style="font-size:11px;">☕ 자바</div>
+            <div class="code-body" style="font-size:11.5px;"><span class="kw">for</span> (<span class="kw">int</span> i=<span class="num">0</span>; i&lt;<span class="num">5</span>; i++) {
+  System.out.<span class="fn">println</span>(i);
+}
+
+<span class="cm">// Enhanced for</span>
+<span class="kw">for</span> (타입 변수 : 컬렉션) {
+  ...
+}</div>
+          </div>
+          <div class="code-panel">
+            <div class="code-header code-header-py" style="font-size:11px;">🐍 파이썬</div>
+            <div class="code-body" style="font-size:11.5px;"><span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>):
+  <span class="fn">print</span>(i)
+
+<span class="cm"># 컬렉션 순회</span>
+<span class="kw">for</span> 변수 <span class="kw">in</span> 컬렉션:
+  ...</div>
+          </div>
+        </div>
+        <div style="margin:0 14px 14px;background:var(--teal-light);border-radius:8px;padding:8px 12px;font-size:11.5px;color:#0F766E;">
+          🔑 <code>range(5)</code> = 0, 1, 2, 3, 4 순서대로
+        </div>
+      </div>
+
+      <!-- WHILE -->
+      <div class="flow-card">
+        <div class="flow-title-bar">
+          <div class="flow-title-icon" style="background:#FEF9C3;color:#CA8A04;">while</div>
+          반복문 (while)
+        </div>
+        <div class="code-grid" style="padding:14px;gap:10px;margin:0;">
+          <div class="code-panel">
+            <div class="code-header code-header-java" style="font-size:11px;">☕ 자바</div>
+            <div class="code-body" style="font-size:11.5px;"><span class="kw">int</span> i = <span class="num">0</span>;
+<span class="kw">while</span> (i < <span class="num">10</span>) {
+  System.out.<span class="fn">printf</span>(
+    <span class="str">"%d번째\n"</span>, i);
+  i++;
+}</div>
+          </div>
+          <div class="code-panel">
+            <div class="code-header code-header-py" style="font-size:11px;">🐍 파이썬</div>
+            <div class="code-body" style="font-size:11.5px;">i = <span class="num">0</span>
+<span class="kw">while</span> i < <span class="num">10</span>:
+  <span class="fn">print</span>(<span class="str">f"</span>{}<span class="str">번째"</span>.<span class="fn">format</span>(i))
+  i += <span class="num">1</span></div>
+          </div>
+        </div>
+        <div style="margin:0 14px 14px;background:#FEF9C3;border-radius:8px;padding:8px 12px;font-size:11.5px;color:#92400E;">
+          🔑 <code>i++</code> 없음 → <code>i += 1</code> 사용
+        </div>
+      </div>
+
+      <!-- 요약 -->
+      <div style="background:linear-gradient(135deg,#1E293B,#0F172A);border-radius:14px;padding:20px;color:white;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;font-weight:700;color:#93C5FD;letter-spacing:0.06em;text-transform:uppercase;">파이썬 제어문 핵심</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;">
+            <span style="background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);border-radius:6px;padding:3px 8px;font-family:monospace;font-size:11px;color:#93C5FD;">:</span>
+            <span style="color:#CBD5E1;">조건/반복 끝에 콜론 필수</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;">
+            <span style="background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);border-radius:6px;padding:3px 8px;font-family:monospace;font-size:11px;color:#93C5FD;">elif</span>
+            <span style="color:#CBD5E1;">자바의 else if → 파이썬은 elif</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;">
+            <span style="background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);border-radius:6px;padding:3px 8px;font-family:monospace;font-size:11px;color:#93C5FD;">in</span>
+            <span style="color:#CBD5E1;">for 반복은 in 키워드 사용</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;">
+            <span style="background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);border-radius:6px;padding:3px 8px;font-family:monospace;font-size:11px;color:#93C5FD;">{ }</span>
+            <span style="color:#CBD5E1;">중괄호 사용 안 함!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 4 · 자료구조
+  ══════════════════════════════════════════════════ -->
+  <div class="slide" id="slide-4">
+    <div class="slide-title">📦 자료구조</div>
+    <div class="slide-sub">파이썬의 4가지 핵심 자료구조</div>
+
+    <div class="ds-grid" style="margin-bottom:20px;">
+      <!-- list -->
+      <div class="ds-card" style="background:var(--py-light);border-color:#BFDBFE;">
+        <span class="ds-icon" style="color:var(--py);">[ ]</span>
+        <div class="ds-name" style="color:var(--py-dark);">list 리스트</div>
+        <div class="ds-desc" style="color:#1E40AF;">순서 있고 수정 가능한 목록</div>
+        <div class="ds-example" style="background:#DBEAFE;color:#1E3A8A;">arr = [1, 3, 5, 7, 9]
+arr.append(11)    # 추가
+arr.extend([13])  # 여러 개
+arr[0] = 2        # 수정
+del arr[0]        # 삭제
+print(arr[0])     # 조회
+print(len(arr))   # 길이</div>
+      </div>
+
+      <!-- tuple -->
+      <div class="ds-card" style="background:var(--purple-light);border-color:#DDD6FE;">
+        <span class="ds-icon" style="color:var(--purple);">( )</span>
+        <div class="ds-name" style="color:#6D28D9;">tuple 튜플</div>
+        <div class="ds-desc" style="color:#5B21B6;">수정 불가능한 리스트 (읽기 전용)</div>
+        <div class="ds-example" style="background:#EDE9FE;color:#4C1D95;">t = (1, 2, 3)
+print(t[0])       # 조회만 가능
+# t[0] = 10 → 오류!
+
+<span style="color:#7C3AED;"># divmod도 튜플 반환</span>
+q, r = divmod(5, 3)</div>
+      </div>
+
+      <!-- set -->
+      <div class="ds-card" style="background:var(--green-light);border-color:#A7F3D0;">
+        <span class="ds-icon" style="color:var(--green);">{ }</span>
+        <div class="ds-name" style="color:#065F46;">set 집합</div>
+        <div class="ds-desc" style="color:#047857;">중복 자동 제거 + 집합 연산</div>
+        <div class="ds-example" style="background:#D1FAE5;color:#064E3B;">s = {"apple","banana","apple"}
+<span style="color:#059669;"># → {"apple","banana"} 중복제거!</span>
+s.add("kiwi")         # 추가
+s.update({"berry"})   # 여러 개
+print("apple" in s)   # 포함 여부</div>
+      </div>
+
+      <!-- dict -->
+      <div class="ds-card" style="background:#FFF7ED;border-color:#FED7AA;">
+        <span class="ds-icon" style="color:var(--java);">{:}</span>
+        <div class="ds-name" style="color:#C2410C;">dict 딕셔너리</div>
+        <div class="ds-desc" style="color:#B45309;">key-value 쌍 (자바의 Map)</div>
+        <div class="ds-example" style="background:#FEF3C7;color:#78350F;">d = {"apple": 3, "banana": 5}
+d["kiwi"] = 7     # 추가/수정
+print(d["apple"]) # 조회 → 3
+print(d.keys())   # 키 목록</div>
+      </div>
+    </div>
+
+    <!-- 빠른 비교 테이블 -->
+    <div class="card">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>자료구조</th>
+            <th>기호</th>
+            <th>순서</th>
+            <th>중복</th>
+            <th>수정</th>
+            <th>특징</th>
+          </tr>
+        </thead>
+        <tbody style="font-size:12.5px;">
+          <tr>
+            <td>list</td>
+            <td><code class="code-inline">[ ]</code></td>
+            <td>✅ 있음</td>
+            <td>✅ 허용</td>
+            <td>✅ 가능</td>
+            <td style="color:var(--text-muted);">가장 많이 사용</td>
+          </tr>
+          <tr>
+            <td>tuple</td>
+            <td><code class="code-inline">( )</code></td>
+            <td>✅ 있음</td>
+            <td>✅ 허용</td>
+            <td>❌ 불가</td>
+            <td style="color:var(--text-muted);">읽기 전용</td>
+          </tr>
+          <tr>
+            <td>set</td>
+            <td><code class="code-inline">{ }</code></td>
+            <td>❌ 없음</td>
+            <td>❌ 제거</td>
+            <td>✅ 가능</td>
+            <td style="color:var(--text-muted);">중복 자동 제거</td>
+          </tr>
+          <tr>
+            <td>dict</td>
+            <td><code class="code-inline">{k:v}</code></td>
+            <td>✅ 있음</td>
+            <td>키 불가</td>
+            <td>✅ 가능</td>
+            <td style="color:var(--text-muted);">key로 조회</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 5 · 함수 & 클래스
+  ══════════════════════════════════════════════════ -->
+  <div class="slide" id="slide-5">
+    <div class="slide-title">⚙️ 함수 &amp; 클래스</div>
+    <div class="slide-sub">파이썬은 def 하나로 함수 끝! 클래스도 훨씬 간결합니다</div>
+
+    <!-- 함수 -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--text-muted);">📌 함수 (Function / Method)</div>
+    <div class="code-grid" style="margin-bottom:24px;">
+      <div class="code-panel">
+        <div class="code-header code-header-java">☕ 자바 — 반환타입 명시 필수</div>
+        <div class="code-body"><span class="kw">int</span> <span class="fn">f</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) {
+  <span class="kw">return</span> a + b;
+}</div>
+      </div>
+      <div class="code-panel">
+        <div class="code-header code-header-py">🐍 파이썬 — def 키워드만!</div>
+        <div class="code-body"><span class="kw">def</span> <span class="fn">f</span>(a, b):
+  <span class="kw">return</span> a + b</div>
+      </div>
+    </div>
+
+    <!-- 클래스 -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--text-muted);">🏗️ 클래스 (Class)</div>
+    <div class="code-grid" style="margin-bottom:20px;">
+      <div class="code-panel">
+        <div class="code-header code-header-java">☕ 자바</div>
+        <div class="code-body"><span class="kw">class</span> Good {
+  List&lt;Integer&gt; li = List.<span class="fn">of</span>(<span class="num">1</span>,<span class="num">2</span>);
+}
+
+<span class="kw">public class</span> ClassTest {
+  <span class="kw">public static void</span> <span class="fn">main</span>(...) {
+    Good good = <span class="kw">new</span> <span class="fn">Good</span>();
+    System.out.<span class="fn">print</span>(
+      good.li.<span class="fn">get</span>(<span class="num">0</span>));
+  }
+}</div>
+      </div>
+      <div class="code-panel">
+        <div class="code-header code-header-py">🐍 파이썬</div>
+        <div class="code-body"><span class="kw">class</span> Good:       <span class="cm"># 클래스</span>
+  li = [<span class="num">1</span>, <span class="num">2</span>]    <span class="cm"># 필드</span>
+
+g = <span class="fn">Good</span>()        <span class="cm"># 인스턴스 생성</span>
+<span class="fn">print</span>(g.li[<span class="num">0</span>])  <span class="cm"># 조회</span></div>
+      </div>
+    </div>
+
+    <!-- 슬라이싱 -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--text-muted);">✂️ 슬라이싱 (Slicing) — 파이썬만의 강력한 기능</div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:10px;">리스트 슬라이싱</div>
+        <div class="code-panel">
+          <div class="code-header code-header-py" style="font-size:11px;">🐍 파이썬</div>
+          <div class="code-body" style="font-size:11.5px;">a = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>]
+b = a[<span class="num">2</span>:<span class="num">4</span>]   <span class="cm"># [3, 4]</span>
+c = a[<span class="op">-</span><span class="num">1</span>]    <span class="cm"># 5 (마지막)</span>
+d = a[<span class="op">::</span><span class="op">-</span><span class="num">1</span>]  <span class="cm"># 뒤집기</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:10px;">문자열 슬라이싱</div>
+        <div class="code-panel">
+          <div class="code-header code-header-py" style="font-size:11px;">🐍 파이썬</div>
+          <div class="code-body" style="font-size:11.5px;">a = <span class="str">"good"</span>
+<span class="fn">print</span>(a[<span class="num">0</span>:<span class="num">2</span>])  <span class="cm"># "go"</span>
+<span class="fn">print</span>(a[<span class="op">-</span><span class="num">2</span>:])  <span class="cm"># "od"</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이싱 시각 설명 -->
+    <div style="margin-top:16px;background:linear-gradient(135deg,#EFF6FF,#F0FDF4);border:1px solid #BFDBFE;border-radius:12px;padding:16px 20px;">
+      <div style="font-size:12.5px;font-weight:700;color:var(--py-dark);margin-bottom:10px;">슬라이싱 규칙 <code style="background:white;padding:2px 6px;border-radius:4px;">a[start:end]</code></div>
+      <div style="display:flex;gap:8px;align-items:center;font-family:monospace;font-size:13px;flex-wrap:wrap;">
+        <div style="background:white;border:1px solid #BFDBFE;border-radius:8px;padding:8px 12px;text-align:center;">
+          <div style="font-size:18px;font-weight:700;color:var(--py);">a[2:4]</div>
+          <div style="font-size:11px;color:var(--text-muted);">인덱스 2~3 추출</div>
+        </div>
+        <div style="font-size:20px;color:var(--text-muted);">→</div>
+        <div style="display:flex;gap:4px;">
+          <span style="background:#F1F5F9;padding:6px 10px;border-radius:6px;font-size:13px;">0<br><span style="font-size:10px;color:var(--text-muted);">1</span></span>
+          <span style="background:#F1F5F9;padding:6px 10px;border-radius:6px;font-size:13px;">1<br><span style="font-size:10px;color:var(--text-muted);">2</span></span>
+          <span style="background:#BFDBFE;padding:6px 10px;border-radius:6px;font-size:13px;border:2px solid var(--py);">2<br><span style="font-size:10px;color:var(--py-dark);">3</span></span>
+          <span style="background:#BFDBFE;padding:6px 10px;border-radius:6px;font-size:13px;border:2px solid var(--py);">3<br><span style="font-size:10px;color:var(--py-dark);">4</span></span>
+          <span style="background:#F1F5F9;padding:6px 10px;border-radius:6px;font-size:13px;">4<br><span style="font-size:10px;color:var(--text-muted);">5</span></span>
+        </div>
+        <div style="font-size:12px;color:var(--text-muted);">← 값<br>← 인덱스</div>
+      </div>
+      <div style="font-size:11.5px;color:#1E40AF;margin-top:8px;">✅ end 인덱스는 <strong>포함되지 않습니다</strong>. a[2:4] = 인덱스 2, 3번 요소만 추출</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SLIDE 6 · 집합 연산 & 컴프리헨션
+  ══════════════════════════════════════════════════ -->
+  <div class="slide" id="slide-6">
+    <div class="slide-title">🧮 집합 연산 &amp; 컴프리헨션</div>
+    <div class="slide-sub">파이썬만의 강력한 기능들</div>
+
+    <!-- 집합 연산 -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--text-muted);">⭕ set 집합 연산</div>
+    <div class="set-ops" style="margin-bottom:24px;">
+      <div class="set-op-card" style="background:#EFF6FF;border:1px solid #BFDBFE;">
+        <div class="set-symbol" style="color:var(--py);">a &amp; b</div>
+        <div class="set-label">교집합</div>
+        <div class="set-desc" style="color:#1E40AF;">두 집합 모두에 있는 것</div>
+      </div>
+      <div class="set-op-card" style="background:#FEF2F2;border:1px solid #FECACA;">
+        <div class="set-symbol" style="color:#DC2626;">a - b</div>
+        <div class="set-label">차집합</div>
+        <div class="set-desc" style="color:#991B1B;">a에만 있고 b엔 없는 것</div>
+      </div>
+      <div class="set-op-card" style="background:var(--green-light);border:1px solid #A7F3D0;">
+        <div class="set-symbol" style="color:var(--green);">a | b</div>
+        <div class="set-label">합집합</div>
+        <div class="set-desc" style="color:#065F46;">a 또는 b에 있는 것 전부</div>
+      </div>
+      <div class="set-op-card" style="background:var(--purple-light);border:1px solid #DDD6FE;">
+        <div class="set-symbol" style="color:var(--purple);">a ^ b</div>
+        <div class="set-label">대칭차집합</div>
+        <div class="set-desc" style="color:#5B21B6;">겹치지 않는 것만 남김</div>
+      </div>
+    </div>
+
+    <!-- 시각적 집합 예시 -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:20px;">
+      <div style="font-size:12.5px;font-weight:700;color:var(--text-muted);margin-bottom:12px;">예시: a = {1,2,3,4} / b = {3,4,5,6}</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;font-size:12px;">
+        <div style="text-align:center;padding:10px;background:#EFF6FF;border-radius:8px;">
+          <div style="font-family:monospace;font-weight:700;color:var(--py);margin-bottom:4px;">a &amp; b</div>
+          <div style="background:white;border-radius:6px;padding:4px;font-family:monospace;">{3, 4}</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:#FEF2F2;border-radius:8px;">
+          <div style="font-family:monospace;font-weight:700;color:#DC2626;margin-bottom:4px;">a - b</div>
+          <div style="background:white;border-radius:6px;padding:4px;font-family:monospace;">{1, 2}</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:var(--green-light);border-radius:8px;">
+          <div style="font-family:monospace;font-weight:700;color:var(--green);margin-bottom:4px;">a | b</div>
+          <div style="background:white;border-radius:6px;padding:4px;font-family:monospace;">{1,2,3,4,5,6}</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:var(--purple-light);border-radius:8px;">
+          <div style="font-family:monospace;font-weight:700;color:var(--purple);margin-bottom:4px;">a ^ b</div>
+          <div style="background:white;border-radius:6px;padding:4px;font-family:monospace;">{1,2,5,6}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 컴프리헨션 -->
+    <div style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--text-muted);">⚡ 컴프리헨션 (Comprehension)</div>
+    <div class="code-grid">
+      <div class="code-panel">
+        <div class="code-header code-header-java">☕ 자바 — 복잡한 Stream API</div>
+        <div class="code-body" style="font-size:11.5px;">List&lt;Integer&gt; squares =
+  IntStream.<span class="fn">range</span>(<span class="num">0</span>, <span class="num">10</span>)
+    .<span class="fn">map</span>(x <span class="op">-></span> x * x)
+    .<span class="fn">boxed</span>()
+    .<span class="fn">collect</span>(
+      Collectors.<span class="fn">toList</span>());</div>
+      </div>
+      <div class="code-panel">
+        <div class="code-header code-header-py">🐍 파이썬 — 한 줄로 끝!</div>
+        <div class="code-body" style="font-size:11.5px;">squares = <span class="fn">list</span>(<span class="fn">map</span>(
+  <span class="kw">lambda</span> x: x**<span class="num">2</span>,
+  <span class="fn">range</span>(<span class="num">10</span>)
+))
+
+<span class="cm"># 더 파이썬스럽게:</span>
+squares = [x**<span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>)]</div>
+      </div>
+    </div>
+
+    <!-- 자료구조 연산자 요약 -->
+    <div style="margin-top:20px;background:linear-gradient(135deg,#1E293B,#0F172A);border-radius:16px;padding:22px 24px;color:white;">
+      <div style="font-size:13px;font-weight:700;color:#93C5FD;margin-bottom:14px;letter-spacing:0.06em;text-transform:uppercase;">📚 자료구조 연산자 정리</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12.5px;">
+        <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;">
+          <div style="color:#FDE68A;font-weight:700;font-family:monospace;margin-bottom:6px;">list 연산자</div>
+          <div style="color:#CBD5E1;line-height:1.8;">
+            <code style="color:#93C5FD;">2 in a</code> — 포함 여부<br>
+            <code style="color:#93C5FD;">a + b</code> — 리스트 합치기<br>
+            <code style="color:#93C5FD;">a * 2</code> — 요소 반복<br>
+            <code style="color:#93C5FD;">a[:]</code> — 전체 복사
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;">
+          <div style="color:#FDE68A;font-weight:700;font-family:monospace;margin-bottom:6px;">계산 함수</div>
+          <div style="color:#CBD5E1;line-height:1.8;">
+            <code style="color:#86EFAC;">sum(리스트)</code> — 합계<br>
+            <code style="color:#86EFAC;">max(리스트)</code> — 최대값<br>
+            <code style="color:#86EFAC;">min(리스트)</code> — 최소값<br>
+            <code style="color:#86EFAC;">리스트.sort()</code> — 정렬
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /slide-container -->
+
+<!-- FOOTER NAV -->
+<div class="slide-footer">
+  <button class="nav-arrow" id="prevBtn" onclick="prevSlide()" disabled>← 이전</button>
+  <span class="page-indicator" id="pageIndicator">1 / 7</span>
+  <button class="nav-arrow primary" id="nextBtn" onclick="nextSlide()">다음 →</button>
+</div>
+
+<div class="body-bottom-space"></div>
+
+<script>
+  let current = 0;
+  const total = 7;
+
+  function goSlide(n) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    document.querySelectorAll('.nav-btn')[current].classList.remove('active');
+    current = n;
+    document.getElementById('slide-' + current).classList.add('active');
+    document.querySelectorAll('.nav-btn')[current].classList.add('active');
+    document.getElementById('pageIndicator').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === total - 1;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function nextSlide() { if (current < total - 1) goSlide(current + 1); }
+  function prevSlide() { if (current > 0) goSlide(current - 1); }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+  });
+</script>
+</body>
+</html>
