@@ -14,6 +14,8 @@
       │
       ├── 비지도학습(Unsupervised Learning)        정답(label) 없이 데이터 패턴만 찾는 방식
       │
+      ├── 강화학습(Reinforcement Learning)        시행착호을 통해 가장 좋은 보상을 받는 행동을 학습(로봇제어, 자율주행, 게임 인공지능
+      │
       └── 딥러닝(Deep Learning)                    머신러닝 중에서 신경망을 깊게 쌓은 방식
             ├── CNN(Convolutional Neural Network)  이미지 처리에 특화된 딥러닝 모델
             ├── RNN(Recurrent Neural Network)      순서(sequence) 데이터 처리 모델. 자연어/시계열
