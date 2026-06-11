@@ -10,9 +10,14 @@
  └── 머신러닝(Machine Learning)                    데이터를 통해 규칙(패턴)을 학습하는 방법
       ├── 지도학습(Supervised Learning)            정답(Label)이 있는 데이터를 학습하는 방식
       │     ├── 분류(Classification)               정답이 카테고리인 문제
+      │     │                                      - Logistic Regression, Decision Tree, K-NN(K-최근접 이웃)
+      │     │                                      - SVM(서포트 벡터 머신), Naive Bayes(나이브 베이즈) 
       │     └── 회귀(Regression)                   정답이 숫자인 문제
+      │                                            - Linear Regression(선형회귀), Ridge/Lasso(릿지/라쏘) 
+      │        앙상블    : 
       │
       ├── 비지도학습(Unsupervised Learning)        정답(label) 없이 데이터 패턴만 찾는 방식
+      │                                           - K-Means, PCA   
       │
       ├── 강화학습(Reinforcement Learning)        시행착호을 통해 가장 좋은 보상을 받는 행동을 학습(로봇제어, 자율주행, 게임 인공지능
       │
